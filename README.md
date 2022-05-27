@@ -1,7 +1,8 @@
 # Libra
 Libra a python based programming language
 
-#Documentation
+# Documentation
+
 •	Shell.py: It will read the raw input from the terminal and display it.
 •	Libra.py: Holds all the code of language. 
 
