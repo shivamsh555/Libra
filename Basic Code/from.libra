@@ -1,0 +1,8 @@
+fun loop()
+var result=1
+from i = 1 to 6 then; 
+var result = result*i
+just
+print(result)
+just
+loop()

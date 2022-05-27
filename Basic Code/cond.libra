@@ -1,0 +1,11 @@
+fun cond()
+var age=input_int()
+if age>=18 AND age<60 then;
+print("adult")
+elsif age>=60 then;
+print("senior citizen")
+else
+print("not eligible")
+just
+just
+cond()

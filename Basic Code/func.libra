@@ -1,0 +1,4 @@
+fun hello()
+print("hello world")
+just
+hello()

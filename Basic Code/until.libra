@@ -1,0 +1,8 @@
+fun loop()
+var i=0
+until i<100 then;
+var i = i+1
+just
+print(i)
+just
+loop()
