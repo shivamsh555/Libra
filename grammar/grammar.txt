@@ -1,0 +1,59 @@
+* --> More than one
+? --> Optional
+
+statements  : NEWLINE* statement (NEWLINE+ statement)* NEWLINE*
+
+statement : KEYWORD:ret expr? 
+		  : KEYWORD:cont   
+		  : KEYWORD:brk  
+		  : expr
+
+expr     : KEYWORD:VAR IDENTIFIER EQ expr
+		 : comp_expr ((KEYWORD:AND|KEYWORD:OR) comp_expr)*
+
+comp_expr : NOT comp-expr
+		  : art_expr ((EE|LT|GT|LTE|GTE) art_expr)*	
+
+art_expr : term ((PLUS|MINUS) term)*
+
+term     : factor ((MUL|DIV|MOD) factor)*
+
+factor   : (PLUS|MINUS) factor
+		 : power
+				
+power    : call (POW factor)*
+
+call     : atom(LPAREN(expr (COMMA expr)*)? RPAREN)?
+
+atom     : INT|FLOAT|STRING|IDENTIFIER
+		 : LPAREN expr RPAREN
+		 : list_expr
+		 : if_expr
+		 : from_expr
+		 : until_expr
+		 : func_def
+
+list_expr : LSQUARE (expr (COMMA expr)*)? RSQUARE
+
+if_expr     : KEYWORD:if expr KEYWORD:then
+              (statement if_expr_b|if_expr_c?)
+            | (NEWLINE statements KEYWORD:just|if_expr_b|if_expr_c)
+
+if_expr_b   : KEYWORD:elsif expr KEYWORD:then
+              (statement if_expr_b|if_expr_c?)
+            | (NEWLINE statements KEYWORD:just|if_expr_b|if_expr_c)
+
+if_expr_c   : KEYWORD:else statement
+            | (NEWLINE statements KEYWORD:just)
+
+from_expr : KEYWORD:from IDENTIFIER EQ expr KEYWORD:to expr 
+			(KEYWORD:step expr)? KEYWORD:then statement
+			(NEWLINE statements KEYWORD:just)
+
+until_expr : KEYWORD:until expr KEYWORD:then statement
+			 (NEWLINE statements KEYWORD:just)
+
+func_def  : KEYWORD:FUN IDENTIFIER?
+			LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN
+			COLON expr
+			(NEWLINE statements KEYWORD:just)
